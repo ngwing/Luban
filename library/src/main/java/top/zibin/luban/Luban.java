@@ -27,7 +27,7 @@ public class Luban implements Handler.Callback {
 
     private String mTargetDir;
     private List<String> mPaths;
-    private int mLeastCompressSize;
+    private static int mLeastCompressSize = 100;
     private OnCompressListener mCompressListener;
 
     private Handler mHandler;
@@ -49,7 +49,7 @@ public class Luban implements Handler.Callback {
      *
      * @param context A context.
      */
-    private File getCompressResultFile(Context context, String path) {
+    private static File getCompressResultFile(Context context, String path) {
         String suffix = Checker.checkSuffix(path);
         String md5 = LubanFileUtil.getMD5(path);
         if (getImageCacheDir(context) != null) {
@@ -66,7 +66,7 @@ public class Luban implements Handler.Callback {
      * @see #getImageCacheDir(Context, String)
      */
     @Nullable
-    private File getImageCacheDir(Context context) {
+    private static File getImageCacheDir(Context context) {
         return getImageCacheDir(context, DEFAULT_DISK_CACHE_DIR);
     }
 
@@ -79,7 +79,7 @@ public class Luban implements Handler.Callback {
      * @see #getImageCacheDir(Context)
      */
     @Nullable
-    private File getImageCacheDir(Context context, String cacheName) {
+    private static File getImageCacheDir(Context context, String cacheName) {
         File cacheDir = context.getExternalCacheDir();
         if (cacheDir != null) {
             File result = new File(cacheDir, cacheName);
@@ -130,8 +130,7 @@ public class Luban implements Handler.Callback {
         }
     }
 
-    @NonNull
-    private File compress(String path, Context context) throws IOException {
+    public static File compress(String path, Context context) throws IOException {
         File result = new File(path);
         File compressResultFile = getCompressResultFile(context, path);
         if (compressResultFile != null && compressResultFile.exists())

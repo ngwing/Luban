@@ -44,11 +44,11 @@ class Checker {
     if (TextUtils.isEmpty(path)) {
       return ".jpg";
     }
-
-    return path.substring(path.lastIndexOf("."), path.length());
+    String suffix=  path.substring(path.lastIndexOf("."), path.length());
+    return TextUtils.isEmpty(suffix) ? ".jpg" : suffix;
   }
 
-  static boolean isNeedCompress(int leastCompressSize, String path) {
+  static boolean needCompress(int leastCompressSize, String path) {
     if (leastCompressSize > 0) {
       File source = new File(path);
       if (!source.exists()) {
@@ -61,4 +61,5 @@ class Checker {
     }
     return true;
   }
+
 }

@@ -137,7 +137,9 @@ public class Luban implements Handler.Callback {
         if (compressResultFile != null && compressResultFile.exists())
             result = compressResultFile;
         else if (Checker.needCompress(mLeastCompressSize, path))
-            new Engine(path, compressResultFile).compress();
+            result = new Engine(path, compressResultFile).compress();
+        if (result == null)
+            return new File(path);
         return result;
     }
 
